@@ -2,6 +2,8 @@
 
 macOS live wallpaper engine: video wallpapers per monitor, menu bar control, no Dock icon.
 
+![LiveWalli manager window](screenshot.png)
+
 ## Requirements
 
 - macOS 10.13+
