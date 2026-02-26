@@ -1,0 +1,62 @@
+TDD: Python macOS Live Wallpaper Engine (PyVideoWall)
+1. Core Requirements
+Language: Python 3.12+ (using pyobjc for native macOS API access).
+
+UI Framework: PySide6 (Qt) for the Management Window; AppKit for the wallpaper overlay.
+
+Video Engine: AVFoundation (hardware-accelerated) for M-series efficiency.
+
+Menu Bar: Persistent circle icon in the status bar (NSStatusBar).
+
+Stealth Mode: App must not appear in the Dock (LSUIElement = True).
+
+Multi-Monitor Support: Create a separate transparent, non-interactive window for every detected NSScreen.
+
+2. Technical Architecture
+A. The Wallpaper Layer (The "Live" Part)
+Class: WallpaperWindow(NSWindow)
+
+Style Mask: NSWindowStyleMaskBorderless
+
+Level: kCGDesktopWindowLevel - 1 (This places the video under desktop icons).
+
+Collection Behavior: NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorStationary.
+
+Interactive: setIgnoresMouseEvents_(True) to allow users to click files/icons on the desktop.
+
+B. Multi-Screen Logic
+Listener: Implement NSWorkspace notifications for NSApplicationDidChangeScreenParametersNotification.
+
+Scaling: Support "Fill", "Fit", and "Stretch" modes per screen.
+
+C. Energy Efficiency (Critical)
+Visibility Check: Use occlusionState to pause the AVPlayer when the desktop is hidden by full-screen apps.
+
+Thread Management: Run the AVPlayer on the native Apple thread, keeping the Python event loop idle.
+
+3. Implementation Details for Cursor
+Step 1: Hide Dock Icon
+In the main entry point, before the app starts, modify the activation policy:
+
+Python
+import AppKit
+info = AppKit.NSBundle.mainBundle().infoDictionary()
+info["LSBackgroundOnly"] = "1" 
+Step 2: The Menu Bar Icon
+Use NSStatusBar.systemStatusBar().statusItemWithLength_(-1) to create a circle icon.
+
+Menu Items: "Manage Wallpapers", "Pause All", "Settings", "Quit".
+
+Step 3: Management UI (PySide6)
+A "Card" based UI showing connected monitors.
+
+Drag-and-drop zone for .mp4 and .mov files.
+
+Persistent storage of wallpaper paths via json or sqlite3.
+
+4. Test Cases
+Monitor Hotplug: Plug in an external 4K monitor; app should automatically spawn a new WallpaperWindow.
+
+Resource Usage: CPU usage should remain below 1% on M1/M2/M3 chips during playback.
+
+App Interaction: Verify desktop icons are clickable while the video plays underneath.

@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Virtual environments
+.venv/
+.venv-build/
+venv/
+clean_env/
+env/
+
+# Built app (py2app)
+LiveWalli.app/
+
+# macOS
+.DS_Store
+*.app/Contents/_CodeSignature/
+
+# IDE / editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# py2app / packaging
+*.dmg
+
+# Local / dev
+*.log
+.pytest_cache/
+.coverage
+htmlcov/

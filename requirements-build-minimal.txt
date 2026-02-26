@@ -1,0 +1,8 @@
+# Smallest build: PySide6-Essentials only (no Addons = no in-window video preview, but app works)
+# Use for py2app when targeting under 200MB.
+PySide6-Essentials>=6.6.0
+pyobjc-core>=10.2
+pyobjc-framework-Cocoa>=10.2
+pyobjc-framework-Quartz>=10.2
+pyobjc-framework-AVFoundation>=10.2
+pyobjc-framework-CoreMedia>=10.2

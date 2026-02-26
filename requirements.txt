@@ -1,0 +1,5 @@
+# LiveWalli - macOS Live Wallpaper Engine
+# Python 3.12+
+
+PySide6>=6.6.0
+pyobjc>=10.2

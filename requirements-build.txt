@@ -1,0 +1,19 @@
+# Minimal dependencies for building LiveWalli.app (smaller than full requirements.txt)
+#
+# CRITICAL: Build from a CLEAN venv so py2app doesn't pull in numpy/pandas/etc.
+#
+#   python3 -m venv clean_env
+#   source clean_env/bin/activate
+#   pip install -r requirements-build.txt
+#   pip install py2app
+#   python setup.py py2app
+#
+# Uses full PySide6 (Essentials can miss pieces when bundled). Only the pyobjc
+# frameworks we need (no 50+ framework meta-package). App no longer needs PyObjCTools.
+
+PySide6>=6.6.0
+pyobjc-core>=10.2
+pyobjc-framework-Cocoa>=10.2
+pyobjc-framework-Quartz>=10.2
+pyobjc-framework-AVFoundation>=10.2
+pyobjc-framework-CoreMedia>=10.2
